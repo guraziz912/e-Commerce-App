@@ -9,5 +9,14 @@ const constants = {
   welcomeMessage: 'Welcome to Fill-o-Cart',
   phoneNumber: '9855446622',
   mobileIcon: 'fas fa-mobile',
+  menClothing: `Men's Clothing`,
+  menClothingPath: '/mens-clothings',
+  womenClothing: `Women's Clothing`,
+  womenClothingPath: '/womens-clothings',
+  electronics: 'Electronics',
+  electronicsPath: '/electronics',
+  price: 'Price : $',
+  addToCart: 'Add to cart',
+  clothingSliceName: 'clothing',
 };
 export default constants;

@@ -2,21 +2,27 @@ import { Carousel } from 'react-bootstrap';
 
 import Image from './Image';
 
-const CustomCarousel = ({ data, time }) => {
-  const carouselItems = data.map((item) => {
-    return (
-      <Carousel.Item interval={time} className="d-block w-100">
-        <Image alt={item.name} src={item.source} />
+import classes from './CustomCarousel.module.css';
 
-        <Carousel.Caption>
-          <h3>{item.name}</h3>
-        </Carousel.Caption>
-      </Carousel.Item>
-    );
-  });
+const CustomCarousel = ({ data, time }) => {
+  // const carouselItems =;
   return (
-    <Carousel variant="dark" fade>
-      {carouselItems}
+    <Carousel>
+      {data.map((item) => {
+        return (
+          <Carousel.Item interval={time}>
+            <Image
+              alt={item.name}
+              src={item.source}
+              className="d-block w-100"
+            />
+
+            <Carousel.Caption>
+              <h3 className={classes.carouselCaption}>{item.name}</h3>
+            </Carousel.Caption>
+          </Carousel.Item>
+        );
+      })}
     </Carousel>
   );
 };

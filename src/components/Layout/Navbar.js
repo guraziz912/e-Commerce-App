@@ -1,4 +1,4 @@
-//Inbuilt depenencies import
+//Inbuilt depenencies imports
 
 import { useHistory } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
@@ -10,9 +10,9 @@ const NavBar = (props) => {
   const history = useHistory();
   // nav bar dropdown data
   const navItems = [
-    { href: '/mens-clothings', title: `Men's Clothing` },
-    { href: '/womens-clothings', title: `Women's Clothing` },
-    { href: '/electronics', title: `Electronics` },
+    { href: constants.menClothingPath, title: constants.menClothing },
+    { href: constants.womenClothingPath, title: constants.womenClothing },
+    { href: constants.electronicsPath, title: constants.electronics },
   ];
   // handler functions
   const navDropDownHandler = (path) => {

@@ -1,6 +1,8 @@
+import CustomCarousel from '../../UI/CustomCarousel';
+
 import menClothing from '../../assets/menClothing.jpg';
 import electronics from '../../assets/electronics.jpg';
-import CustomCarousel from '../../UI/CustomCarousel';
+import womenClothing from '../../assets/womenClothing.jpg';
 
 const HomePage = () => {
   const bestsellerData = [
@@ -10,8 +12,7 @@ const HomePage = () => {
     },
     {
       name: `Women's Clothing`,
-      source:
-        'http://themes.pixelstrap.com/multikart/assets/images/home-banner/2.jpg',
+      source: womenClothing,
     },
     {
       name: `Electronics`,
@@ -20,7 +21,7 @@ const HomePage = () => {
   ];
   return (
     <div>
-      <CustomCarousel data={bestsellerData} time={1000} />
+      <CustomCarousel data={bestsellerData} time={5000} />
     </div>
   );
 };
