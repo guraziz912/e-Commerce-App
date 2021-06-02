@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 
 import MensProduct from '../components/Clothing/MensProduct';
 
-import classes from './MensClothing.module.css';
+import classes from './ProductListing.module.css';
 
 const MensClothing = () => {
   return (

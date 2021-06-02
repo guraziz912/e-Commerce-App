@@ -18,5 +18,6 @@ const constants = {
   price: 'Price : $',
   addToCart: 'Add to cart',
   clothingSliceName: 'clothing',
+  electronicSliceName: 'electronics',
 };
 export default constants;

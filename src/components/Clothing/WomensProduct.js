@@ -14,7 +14,7 @@ const WomensProduct = () => {
     return (
       <CustomCard
         name={item.name}
-        id={item.id}
+        itemId={item.id}
         price={item.price}
         img={item.image}
       />

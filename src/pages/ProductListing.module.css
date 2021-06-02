@@ -1,0 +1,13 @@
+.menSection {
+  box-sizing: border-box;
+}
+.colLeft {
+  width: 30%;
+  float: left;
+  padding: 15px;
+}
+.colRight {
+  width: 70%;
+  float: left;
+  padding: 15px;
+}

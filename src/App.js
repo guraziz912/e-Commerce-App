@@ -6,6 +6,8 @@ import Layout from './components/Layout/Layout';
 import HomePage from './components/Homepage/HomePage';
 import MensClothing from './pages/MensClothing';
 import WomensClothing from './pages/WomensClothing';
+import Electronics from './pages/Electronics';
+import ProductDetail from './pages/ProductDetail';
 
 //Css imports
 import './App.css';
@@ -23,12 +25,22 @@ function App() {
             path={constants.menClothingPath}
             component={MensClothing}
             exact
-          ></Route>
+          />
           <Route
             path={constants.womenClothingPath}
             component={WomensClothing}
             exact
-          ></Route>
+          />
+          <Route
+            path={constants.electronicsPath}
+            component={Electronics}
+            exact
+          />
+          <Route
+            path={`/electronics/:itemId`}
+            component={ProductDetail}
+            exact
+          />
         </Switch>
       </Layout>
     </Router>
