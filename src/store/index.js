@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { clothingReducer } from './clothingSlice';
-import { electronicsReducer } from './electronicsSlice';
+import { productReducer } from './productSlice';
+import { cartReducer } from './cartSlice';
 
 const store = configureStore({
   reducer: {
-    clothing: clothingReducer,
-    electronics: electronicsReducer,
+    products: productReducer,
+    cart: cartReducer,
   },
 });
 export default store;

@@ -8,3 +8,6 @@
   height: 60%;
   margin-bottom: 10px;
 }
+.cardText {
+  text-decoration: none;
+}

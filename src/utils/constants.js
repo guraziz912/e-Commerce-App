@@ -17,7 +17,7 @@ const constants = {
   electronicsPath: '/electronics',
   price: 'Price : $',
   addToCart: 'Add to cart',
-  clothingSliceName: 'clothing',
-  electronicSliceName: 'electronics',
+  productSliceName: 'product',
+  cartSliceName: 'cart',
 };
 export default constants;

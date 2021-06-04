@@ -1,0 +1,10 @@
+.productImage {
+  width: 80%;
+}
+.productName {
+  font-size: 30px;
+}
+.productDetails {
+  font-size: 24px;
+  text-decoration: underline;
+}

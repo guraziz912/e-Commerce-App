@@ -4,10 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //Custom imports
 import Layout from './components/Layout/Layout';
 import HomePage from './components/Homepage/HomePage';
-import MensClothing from './pages/MensClothing';
-import WomensClothing from './pages/WomensClothing';
-import Electronics from './pages/Electronics';
-import ProductDetail from './pages/ProductDetail';
+import Products from './components/Products/Products';
+import ProductDetail from './components/Products/ProductDetail';
+import Cart from './components/Cart/Cart';
 
 //Css imports
 import './App.css';
@@ -22,25 +21,16 @@ function App() {
         <Switch>
           <Route path={constants.homePath} component={HomePage} exact></Route>
           <Route
-            path={constants.menClothingPath}
-            component={MensClothing}
+            path={'/products/:productCategory'}
+            component={Products}
             exact
           />
           <Route
-            path={constants.womenClothingPath}
-            component={WomensClothing}
-            exact
-          />
-          <Route
-            path={constants.electronicsPath}
-            component={Electronics}
-            exact
-          />
-          <Route
-            path={`/electronics/:itemId`}
+            path={`/products/:productCategory/:itemId`}
             component={ProductDetail}
             exact
           />
+          <Route path={`/cart`} component={Cart} exact />
         </Switch>
       </Layout>
     </Router>
