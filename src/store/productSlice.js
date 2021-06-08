@@ -198,6 +198,9 @@ const initialProductState = {
   masterData: {
     sizes: ['small', 'medium', 'large'],
     category: null,
+    brands: ['zara', 'nike', 'adidas'],
+    colours: ['blue', 'black', 'pink', 'white', 'maroon'],
+    selectedSizes: [],
   },
 };
 
@@ -222,7 +225,7 @@ const productSlice = createSlice({
     decreaseQuantity(state, action) {
       const item = productMapper(state.productData, action.payload);
 
-      if (item) {
+      if (item && item.quantity > 0) {
         item.quantity--;
         item.totalPrice -= item.price;
       }

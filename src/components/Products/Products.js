@@ -6,9 +6,11 @@ import { productActions } from '../../store/productSlice';
 
 //custom imports
 import CustomCard from '../../UI/CustomCard';
+import Filter from '../Filter/Filter';
 
 //CSS import
 import classes from './Products.module.css';
+import constants from '../../utils/constants';
 
 const Products = (props) => {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ const Products = (props) => {
     if (item.category === category) {
       return (
         <CustomCard
+          type={constants.productListing}
           name={item.name}
           itemId={item.id}
           price={item.price}
@@ -36,12 +39,15 @@ const Products = (props) => {
     }
   });
   return (
-    <Container>
-      <Row>
-        <Col xs={6} md={4}>
-          Filter
+    <Container className={classes.productContainer}>
+      <Row className={classes.productRow}>
+        <Col xs={5} md={2}>
+          <div>
+            <Filter className={classes.filter} />
+          </div>
         </Col>
-        <Col xs={12} md={8}>
+
+        <Col xs={12} md={10}>
           <div className={classes.product}>{products}</div>
         </Col>
       </Row>

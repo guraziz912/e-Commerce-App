@@ -8,3 +8,55 @@
   font-size: 24px;
   text-decoration: underline;
 }
+.footerRow {
+  margin-top: 5rem;
+}
+.otherProducts {
+  display: grid;
+  grid-gap: 10rem;
+  grid-template-columns: repeat(4, 10px);
+}
+
+@media only screen and (max-width: 600px) {
+  .otherProducts {
+    grid-template-columns: repeat(1, 20rem);
+    grid-gap: 5px;
+    margin-right: 5rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .otherProducts {
+    grid-template-columns: repeat(1, 20rem);
+    grid-gap: 5px;
+    margin-right: 5rem;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .otherProducts {
+    grid-template-columns: repeat(3, 20rem);
+    grid-gap: 5rem;
+    margin-right: 5rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .otherProducts {
+    grid-template-columns: repeat(4, 20rem);
+    grid-gap: 5rem;
+    margin-right: 5rem;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .otherProducts {
+    grid-template-columns: repeat(4);
+    grid-gap: 5rem;
+    margin-right: 5rem;
+  }
+}

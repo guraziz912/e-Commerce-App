@@ -19,5 +19,9 @@ const constants = {
   addToCart: 'Add to cart',
   productSliceName: 'product',
   cartSliceName: 'cart',
+  productListing: 'listing',
+  filter: 'Filter',
+  addedToCart: 'Your item is added to the cart',
+  successAlert: 'success',
 };
 export default constants;

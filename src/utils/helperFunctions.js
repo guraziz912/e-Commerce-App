@@ -7,6 +7,6 @@ export const findItem = (dataList, itemId) => {
   }
 };
 export const productMapper = (data, payload) => {
-  const itemIndex = data.find((item) => item.id === payload);
-  return itemIndex;
+  const item = data.find((item) => item.id === payload);
+  return item;
 };

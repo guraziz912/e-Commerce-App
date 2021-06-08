@@ -35,6 +35,22 @@ const cartSlice = createSlice({
       state.totalCartPrice -= cartItem.totalPrice;
       state.cart = state.cart.filter((item) => item.id !== action.payload);
     },
+    itemIncrease(state, action) {
+      const cartItem = productMapper(state.cart, action.payload);
+      if (cartItem) {
+        cartItem.quantity++;
+        cartItem.totalPrice += cartItem.price;
+        state.totalCartPrice += cartItem.price;
+      }
+    },
+    itemDecrease(state, action) {
+      const cartItem = productMapper(state.cart, action.payload);
+      if (cartItem && cartItem.quantity > 1) {
+        cartItem.quantity--;
+        cartItem.totalPrice -= cartItem.price;
+        state.totalCartPrice -= cartItem.price;
+      }
+    },
   },
 });
 export const cartActions = cartSlice.actions;
