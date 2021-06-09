@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { Container, Table, Row, Button, Col } from 'react-bootstrap';
+import StripeCheckout from 'react-stripe-checkout';
 
 import Image from '../../UI/Image';
+import Counter from '../../UI/Counter';
 import { cartActions } from '../../store/cartSlice';
 
 import classes from './Cart.module.css';
-import Counter from '../../UI/Counter';
 
 const Cart = () => {
   const history = useHistory();
@@ -22,6 +24,10 @@ const Cart = () => {
     history.push('/');
   };
 
+  const cartPrintHandler = (token, address) => {
+    console.log(token, address);
+  };
+
   //item quantity increase
   const increaseHandler = (id) => {
     dispatch(cartActions.itemIncrease(id));
@@ -33,13 +39,15 @@ const Cart = () => {
 
   //mapping cart item
   const cartDetails = cart.map(
-    ({ name, image, id, price, quantity, totalPrice }) => {
+    ({ name, image, id, price, quantity, totalPrice, category }) => {
       return (
         <tr className={classes.cartRow}>
           <td>
             <Image className={classes.cartImage} alt={name} src={image} />
           </td>
+
           <td>{name}</td>
+
           <td>${price}</td>
           <td>
             <Counter
@@ -87,9 +95,11 @@ const Cart = () => {
             </Button>
           </Col>
           <Col md={{ span: 4, offset: 4 }}>
-            <Button className={classes.button} variant="danger">
-              Checkout
-            </Button>
+            <StripeCheckout
+              className={classes.button}
+              stripeKey="pk_test_51IyhiTSAoPHzmNjVBMWYDdC09jqqR0QKSRQXJTR5XncbGUsHd3EV8OoETxnF5VIDGW92FdIJOI2SneZ4wbQgmHYe00bhLttufU"
+              token={cartPrintHandler}
+            />
           </Col>
         </Row>
       </Row>

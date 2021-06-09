@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 //custom imports
-import { productMapper } from '../utils/helperFunctions';
+import {
+  productMapper,
+  productFilter,
+  checkIfPresent,
+  checkIfTrue,
+  productFilterFromArray,
+} from '../utils/helperFunctions';
 
 import constants from '../utils/constants';
 
@@ -19,6 +25,7 @@ const initialProductState = {
       image: 'http://themes.pixelstrap.com/multikart/assets/images/pro3/28.jpg',
       size: null,
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'm2',
@@ -195,12 +202,14 @@ const initialProductState = {
       totalPrice: 0,
     },
   ],
+  filteredProductData: [],
   masterData: {
     sizes: ['small', 'medium', 'large'],
     category: null,
-    brands: ['zara', 'nike', 'adidas'],
-    colours: ['blue', 'black', 'pink', 'white', 'maroon'],
-    selectedSizes: [],
+    clothingBrands: ['Zara', 'Nike', 'Adidas'],
+    electronicsBrands: ['Logi', 'Dell', 'TP-Link', 'IKARUS'],
+    colours: ['Blue', 'Black', 'Pink', 'White', 'Maroon'],
+    filter: { selectedBrand: [], selectedColour: null },
   },
 };
 
@@ -246,6 +255,65 @@ const productSlice = createSlice({
         existingItem.size = null;
         existingItem.totalPrice = null;
       }
+    },
+    setBrandFilter(state, action) {
+      const { name, checked } = action.payload;
+      if (
+        checked &&
+        !checkIfPresent(state.masterData.filter.selectedBrand, name)
+      ) {
+        state.masterData.filter.selectedBrand.push(name);
+        // if (state.filteredProductData.length !== 0) {
+        //   state.filteredProductData.filter(({ brand }) =>
+        //     state.masterData.filter.selectedBrand.includes(brand)
+        //   );
+        // } else {
+        // state.filteredProductData = state.productData.filter(({ brand }) =>
+        //   state.masterData.filter.selectedBrand.includes(brand)
+        // );
+        // }
+      } else if (
+        !checked &&
+        checkIfPresent(state.masterData.filter.selectedBrand, name)
+      ) {
+        state.masterData.filter.selectedBrand = productFilter(
+          state.masterData.filter.selectedBrand,
+          name
+        );
+        // state.filteredProductData = state.productData.filter(({ brand }) =>
+        //   state.masterData.filter.selectedBrand.includes(brand)
+        // );
+      }
+    },
+    setColourFilter(state, action) {
+      const value = action.payload;
+
+      state.masterData.filter.selectedColour = value;
+      // if (state.filteredProductData.length !== 0) {
+      //   console.log('woking');
+      //   state.filteredProductData = state.filteredProductData.filter(
+      //     ({ colour }) => colour === state.masterData.filter.selectedColour
+      //   );
+      // } else {
+
+      // state.filteredProductData = state.productData.filter(
+      //   ({ colour }) => colour === state.masterData.filter.selectedColour
+      // );
+      // }
+    },
+
+    setSizeFilter(state, action) {},
+    setFilteredProducts(state) {
+      state.filteredProductData = state.productData.filter((obj) => {
+        console.log('working');
+        Object.entries(state.masterData.filter).every(([prop, find]) =>
+          find.includes(obj[prop])
+        );
+      });
+    },
+    setDefaultBrandFilter(state) {
+      state.masterData.filter.selectedBrand = [];
+      state.masterData.filter.selectedColour = null;
     },
   },
 });

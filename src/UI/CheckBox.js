@@ -1,11 +1,18 @@
-import { Fragment } from 'react';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
-const CheckBox = (props) => {
+const CheckBox = ({ checked, onChange, name }) => {
   return (
-    <Fragment>
-      <input type="checkbox" {...props}></input>
-      <label>{props.label}</label>
-    </Fragment>
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={checked}
+          onChange={onChange}
+          name={name}
+          color="primary"
+        />
+      }
+      label={name}
+    />
   );
 };
 export default CheckBox;

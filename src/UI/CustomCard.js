@@ -10,7 +10,7 @@ import constants from '../utils/constants';
 import classes from './CustomCard.module.css';
 
 const CustomCard = (props) => {
-  const { name, price, itemId, img, category, type } = props;
+  const { name, price, itemId, img, category, type, itemBrand } = props;
   let item = 0;
   switch (type) {
     case constants.productListing:
@@ -24,6 +24,7 @@ const CustomCard = (props) => {
                 {constants.price}
                 {price}
               </Card.Text>
+              <Card.Text>Brand:{itemBrand}</Card.Text>
             </Card.Body>
           </Card>
         </Link>

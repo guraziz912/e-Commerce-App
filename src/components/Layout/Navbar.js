@@ -10,6 +10,8 @@ import { productActions } from '../../store/productSlice';
 //constants
 import constants from '../../utils/constants';
 
+import classes from './Navbar.module.css';
+
 const NavBar = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -58,7 +60,7 @@ const NavBar = (props) => {
     );
   });
   return (
-    <Navbar>
+    <Navbar className={classes.nav}>
       <Navbar.Brand onClick={directToHomePageHandler}>
         {constants.navLogo}
         <i class={constants.cartIcon}></i>
