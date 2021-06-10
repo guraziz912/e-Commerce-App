@@ -1,7 +1,7 @@
 const constants = {
   home: 'Home',
   homePath: '/',
-  navLogo: 'Fill-o-',
+  navLogo: 'Fill-o-Cart',
   navDropDownTitle: 'Products',
   navClassname: 'mr-auto',
   cartIcon: 'fas fa-shopping-cart',

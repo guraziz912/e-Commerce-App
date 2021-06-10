@@ -39,6 +39,7 @@ const initialProductState = {
       category: 'mens',
       size: null,
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'm3',
@@ -52,6 +53,7 @@ const initialProductState = {
       category: 'mens',
       size: null,
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'm4',
@@ -65,6 +67,7 @@ const initialProductState = {
       category: 'mens',
       size: null,
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'm5',
@@ -78,6 +81,7 @@ const initialProductState = {
       category: 'mens',
       size: null,
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
 
     {
@@ -92,6 +96,7 @@ const initialProductState = {
       image: 'http://themes.pixelstrap.com/multikart/assets/images/pro3/2.jpg',
       category: 'womens',
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'w2',
@@ -104,6 +109,7 @@ const initialProductState = {
       image: 'http://themes.pixelstrap.com/multikart/assets/images/pro3/1.jpg',
       category: 'womens',
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'w3',
@@ -116,6 +122,7 @@ const initialProductState = {
       image: 'https://m.media-amazon.com/images/I/61hbqL0V5JL._AC_UL320_.jpg',
       category: 'womens',
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'w4',
@@ -128,6 +135,7 @@ const initialProductState = {
       image: 'https://m.media-amazon.com/images/I/81PBvVoAUyL._AC_UL320_.jpg',
       category: 'womens',
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'w5',
@@ -140,6 +148,7 @@ const initialProductState = {
       image: 'https://m.media-amazon.com/images/I/614rKOTHPLL._AC_UL320_.jpg',
       category: 'womens',
       totalPrice: 0,
+      sizeAvailable: ['small', 'medium', 'large'],
     },
     {
       id: 'e1',
@@ -209,7 +218,12 @@ const initialProductState = {
     clothingBrands: ['Zara', 'Nike', 'Adidas'],
     electronicsBrands: ['Logi', 'Dell', 'TP-Link', 'IKARUS'],
     colours: ['Blue', 'Black', 'Pink', 'White', 'Maroon'],
-    filter: { selectedBrand: [], selectedColour: null },
+    filter: {
+      selectedBrand: [],
+      selectedColour: null,
+      selectedPrice: [],
+      selectedSize: [],
+    },
   },
 };
 
@@ -302,14 +316,60 @@ const productSlice = createSlice({
       // }
     },
 
-    setSizeFilter(state, action) {},
-    setFilteredProducts(state) {
-      state.filteredProductData = state.productData.filter((obj) => {
-        console.log('working');
-        Object.entries(state.masterData.filter).every(([prop, find]) =>
-          find.includes(obj[prop])
+    setSizeFilter(state, action) {
+      const { name, checked } = action.payload;
+      if (
+        checked &&
+        !checkIfPresent(state.masterData.filter.selectedSize, name)
+      ) {
+        state.masterData.filter.selectedSize.push(name);
+      } else if (
+        !checked &&
+        checkIfPresent(state.masterData.filter.selectedSize, name)
+      ) {
+        state.masterData.filter.selectedSize = productFilter(
+          state.masterData.filter.selectedSize,
+          name
         );
-      });
+      }
+    },
+    setFilteredProducts(state) {
+      let brandArr = [];
+      let colourArr = [];
+      const {
+        selectedBrand,
+        selectedColour,
+        selectedSize,
+      } = state.masterData.filter;
+      if (state.masterData.filter.selectedBrand.length !== 0) {
+        brandArr = state.productData.filter((item) => {
+          if (state.masterData.filter.selectedBrand.includes(item.brand)) {
+            return item;
+          }
+        });
+      }
+      if (state.masterData.filter.selectedColour !== null) {
+        colourArr = state.productData.filter(
+          ({ colour }) => colour === state.masterData.filter.selectedColour
+        );
+      }
+      const overallFilteredProducts = [];
+      if (brandArr.length !== 0 && colourArr.length !== 0) {
+        brandArr.filter((x) => {
+          if (colourArr.includes(x)) {
+            overallFilteredProducts.push(x);
+          }
+        });
+      }
+      if (overallFilteredProducts.length !== 0) {
+        state.filteredProductData = overallFilteredProducts;
+      } else {
+        if (brandArr.length !== 0 && colourArr.length === 0) {
+          state.filteredProductData = brandArr;
+        } else if (brandArr.length === 0 && colourArr.length !== 0) {
+          state.filteredProductData = colourArr;
+        }
+      }
     },
     setDefaultBrandFilter(state) {
       state.masterData.filter.selectedBrand = [];

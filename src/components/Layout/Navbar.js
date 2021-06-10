@@ -61,13 +61,15 @@ const NavBar = (props) => {
   });
   return (
     <Navbar className={classes.nav}>
-      <Navbar.Brand onClick={directToHomePageHandler}>
+      <Navbar.Brand
+        onClick={directToHomePageHandler}
+        className={classes.navLogo}
+      >
         {constants.navLogo}
-        <i class={constants.cartIcon}></i>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls={constants.navToggle} />
 
-      <Nav className={constants.navClassname}>
+      <Nav className={classes.navLinks}>
         <Nav.Link onClick={directToHomePageHandler}>{constants.home}</Nav.Link>
         <NavDropdown
           title={constants.navDropDownTitle}

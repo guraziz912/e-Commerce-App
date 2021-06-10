@@ -86,7 +86,12 @@ const Filter = () => {
       [event.target.name]: event.target.checked,
     });
 
-    dispatch(productActions.setColourFilter(event.target.value));
+    dispatch(
+      productActions.setSizeFilter({
+        name: event.target.name,
+        checked: event.target.checked,
+      })
+    );
   };
 
   //Setting Prices

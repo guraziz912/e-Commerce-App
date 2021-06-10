@@ -14,10 +14,12 @@ import constants from '../../utils/constants';
 
 const Products = (props) => {
   const dispatch = useDispatch();
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const category = useSelector((state) => state.products.masterData.category);
   const productData = useSelector((state) => state.products.productData);
   const filterData = useSelector((state) => state.products.masterData.filter);
+  const filteredProductData = useSelector(
+    (state) => state.products.filteredProductData
+  );
 
   useEffect(() => {
     dispatch(
@@ -26,36 +28,45 @@ const Products = (props) => {
   }, [props.match.params.productCategory, dispatch]);
 
   useEffect(() => {
-    let filteredProductData = 0;
-
-    for (let key in filterData) {
-      filteredProductData = productData.filter(
-        (Object) => Object[key] === filterData[key]
-      );
-      console.log(filteredProductData);
-    }
+    console.log('woking');
+    dispatch(productActions.setFilteredProducts());
   }, [filterData]);
 
-  // let products = null;
+  let products = [];
 
-  // destrusture item**
-  // if (filteredProducts) {
-  const products = productData.map((item) => {
-    if (item.category === category) {
-      return (
-        <CustomCard
-          type={constants.productListing}
-          name={item.name}
-          itemId={item.id}
-          price={item.price}
-          img={item.image}
-          category={item.category}
-          itemBrand={item.brand}
-        />
-      );
-    }
-  });
-  // }
+  if (filteredProductData.length !== 0) {
+    products = filteredProductData.map((item) => {
+      if (item.category === category) {
+        return (
+          <CustomCard
+            type={constants.productListing}
+            name={item.name}
+            itemId={item.id}
+            price={item.price}
+            img={item.image}
+            category={item.category}
+            itemBrand={item.brand}
+          />
+        );
+      }
+    });
+  } else {
+    products = productData.map((item) => {
+      if (item.category === category) {
+        return (
+          <CustomCard
+            type={constants.productListing}
+            name={item.name}
+            itemId={item.id}
+            price={item.price}
+            img={item.image}
+            category={item.category}
+            itemBrand={item.brand}
+          />
+        );
+      }
+    });
+  }
 
   return (
     <Container className={classes.productContainer}>
