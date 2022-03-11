@@ -1,5 +1,5 @@
 //Inbuilt dependencies imports
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { productActions } from '../../store/productSlice';
@@ -11,6 +11,7 @@ import Filter from '../Filter/Filter';
 //CSS import
 import classes from './Products.module.css';
 import constants from '../../utils/constants';
+import schemaConstants from '../../utils/schemaConstants';
 
 const Products = (props) => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Products = (props) => {
   const filteredProductData = useSelector(
     (state) => state.products.filteredProductData
   );
+  const { selectedPrice } = filterData;
 
   useEffect(() => {
     dispatch(
@@ -28,56 +30,58 @@ const Products = (props) => {
   }, [props.match.params.productCategory, dispatch]);
 
   useEffect(() => {
-    console.log('woking');
     dispatch(productActions.setFilteredProducts());
-  }, [filterData]);
+  }, [filterData, dispatch]);
 
   let products = [];
 
   if (filteredProductData.length !== 0) {
     products = filteredProductData.map((item) => {
       if (item.category === category) {
-        return (
-          <CustomCard
-            type={constants.productListing}
-            name={item.name}
-            itemId={item.id}
-            price={item.price}
-            img={item.image}
-            category={item.category}
-            itemBrand={item.brand}
-          />
-        );
+        if (item.price >= selectedPrice[0] && item.price < selectedPrice[1]) {
+          return (
+            <CustomCard
+              type={constants.productListing}
+              name={item.name}
+              itemId={item.id}
+              price={item.price}
+              img={item.image}
+              category={item.category}
+              itemBrand={item.brand}
+            />
+          );
+        }
       }
     });
   } else {
     products = productData.map((item) => {
       if (item.category === category) {
-        return (
-          <CustomCard
-            type={constants.productListing}
-            name={item.name}
-            itemId={item.id}
-            price={item.price}
-            img={item.image}
-            category={item.category}
-            itemBrand={item.brand}
-          />
-        );
+        if (item.price >= selectedPrice[0] && item.price < selectedPrice[1]) {
+          return (
+            <CustomCard
+              type={constants.productListing}
+              name={item.name}
+              itemId={item.id}
+              price={item.price}
+              img={item.image}
+              category={item.category}
+              itemBrand={item.brand}
+            />
+          );
+        }
       }
     });
   }
-
   return (
     <Container className={classes.productContainer}>
       <Row className={classes.productRow}>
-        <Col xs={5} md={2}>
+        <Col xs={3} md={3}>
           <div>
             <Filter className={classes.filter} />
           </div>
         </Col>
 
-        <Col xs={12} md={10}>
+        <Col xs={12} md={7}>
           <div className={classes.product}>{products}</div>
         </Col>
       </Row>

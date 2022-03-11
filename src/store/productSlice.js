@@ -1,15 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 //custom imports
+import { ProductData } from '../components/Products/ProductData';
+import menClothing from '../assets/menClothing.jpg';
+import electronics from '../assets/electronics.jpg';
+import womenClothing from '../assets/womenClothing.jpg';
 import {
   productMapper,
   productFilter,
   checkIfPresent,
-  checkIfTrue,
-  productFilterFromArray,
+  filterBrand,
+  filterColour,
+  filterSize,
 } from '../utils/helperFunctions';
 
 import constants from '../utils/constants';
+import schemaConstants from '../utils/schemaConstants';
 
 const initialProductState = {
   productData: [
@@ -213,17 +219,59 @@ const initialProductState = {
   ],
   filteredProductData: [],
   masterData: {
-    sizes: ['small', 'medium', 'large'],
+    sizes: [constants.small, constants.medium, constants.large],
     category: null,
-    clothingBrands: ['Zara', 'Nike', 'Adidas'],
-    electronicsBrands: ['Logi', 'Dell', 'TP-Link', 'IKARUS'],
-    colours: ['Blue', 'Black', 'Pink', 'White', 'Maroon'],
+    clothingBrands: [constants.zara, constants.nike, constants.adidas],
+    electronicsBrands: [
+      constants.logi,
+      constants.dell,
+      constants.tpLink,
+      constants.ikarus,
+    ],
+    colours: [
+      constants.blue,
+      constants.black,
+      constants.pink,
+      constants.white,
+      constants.maroon,
+    ],
     filter: {
       selectedBrand: [],
       selectedColour: null,
-      selectedPrice: [],
+      selectedPrice: [schemaConstants.MIN_PRICE, schemaConstants.MAX_PRICE],
       selectedSize: [],
     },
+    bestSellerData: [
+      {
+        name: constants.menClothing,
+        source: menClothing,
+      },
+      {
+        name: constants.womenClothing,
+        source: womenClothing,
+      },
+      {
+        name: constants.electronics,
+        source: electronics,
+      },
+    ],
+    navItems: [
+      {
+        href: constants.menProductLink,
+        title: constants.menClothing,
+        category: constants.categoryMen,
+      },
+      {
+        href: constants.womenProductLink,
+        title: constants.womenClothing,
+        category: constants.categoryWomen,
+      },
+      {
+        href: constants.electronicsProductLink,
+        title: constants.electronics,
+        category: constants.categoryElectronics,
+      },
+    ],
   },
 };
 
@@ -248,7 +296,7 @@ const productSlice = createSlice({
     decreaseQuantity(state, action) {
       const item = productMapper(state.productData, action.payload);
 
-      if (item && item.quantity > 0) {
+      if (item && item.quantity > schemaConstants.MIN_QUANTITY) {
         item.quantity--;
         item.totalPrice -= item.price;
       }
@@ -265,7 +313,7 @@ const productSlice = createSlice({
     setDefault(state, action) {
       const existingItem = productMapper(state.productData, action.payload);
       if (existingItem) {
-        existingItem.quantity = 0;
+        existingItem.quantity = schemaConstants.MIN_QUANTITY;
         existingItem.size = null;
         existingItem.totalPrice = null;
       }
@@ -277,15 +325,6 @@ const productSlice = createSlice({
         !checkIfPresent(state.masterData.filter.selectedBrand, name)
       ) {
         state.masterData.filter.selectedBrand.push(name);
-        // if (state.filteredProductData.length !== 0) {
-        //   state.filteredProductData.filter(({ brand }) =>
-        //     state.masterData.filter.selectedBrand.includes(brand)
-        //   );
-        // } else {
-        // state.filteredProductData = state.productData.filter(({ brand }) =>
-        //   state.masterData.filter.selectedBrand.includes(brand)
-        // );
-        // }
       } else if (
         !checked &&
         checkIfPresent(state.masterData.filter.selectedBrand, name)
@@ -294,26 +333,12 @@ const productSlice = createSlice({
           state.masterData.filter.selectedBrand,
           name
         );
-        // state.filteredProductData = state.productData.filter(({ brand }) =>
-        //   state.masterData.filter.selectedBrand.includes(brand)
-        // );
       }
     },
     setColourFilter(state, action) {
       const value = action.payload;
 
       state.masterData.filter.selectedColour = value;
-      // if (state.filteredProductData.length !== 0) {
-      //   console.log('woking');
-      //   state.filteredProductData = state.filteredProductData.filter(
-      //     ({ colour }) => colour === state.masterData.filter.selectedColour
-      //   );
-      // } else {
-
-      // state.filteredProductData = state.productData.filter(
-      //   ({ colour }) => colour === state.masterData.filter.selectedColour
-      // );
-      // }
     },
 
     setSizeFilter(state, action) {
@@ -333,41 +358,66 @@ const productSlice = createSlice({
         );
       }
     },
+    setPriceFilter(state, action) {
+      state.masterData.selectedPrice = action.payload;
+    },
     setFilteredProducts(state) {
       let brandArr = [];
       let colourArr = [];
+      let sizeArr = [];
       const {
         selectedBrand,
         selectedColour,
         selectedSize,
       } = state.masterData.filter;
-      if (state.masterData.filter.selectedBrand.length !== 0) {
-        brandArr = state.productData.filter((item) => {
-          if (state.masterData.filter.selectedBrand.includes(item.brand)) {
-            return item;
+      //filter according to size
+      if (selectedBrand.length !== schemaConstants.MIN_LENGTH) {
+        brandArr = filterBrand(state.productData, selectedBrand);
+      }
+      //filtering according to colour
+      if (selectedColour !== null) {
+        colourArr = filterColour(state.productData, selectedColour);
+      }
+      //filtering according to size
+      if (selectedSize.length !== schemaConstants.MIN_LENGTH) {
+        sizeArr = filterSize(state.productData, selectedSize);
+      }
+      // mapping filtered data
+      let overallFilteredProducts = [];
+      if (
+        brandArr.length !== schemaConstants.MIN_LENGTH &&
+        colourArr.length !== schemaConstants.MIN_LENGTH &&
+        sizeArr.length !== schemaConstants.MIN_LENGTH
+      ) {
+        brandArr.filter((item) => {
+          if (colourArr.includes(item)) {
+            overallFilteredProducts.push(item);
           }
         });
-      }
-      if (state.masterData.filter.selectedColour !== null) {
-        colourArr = state.productData.filter(
-          ({ colour }) => colour === state.masterData.filter.selectedColour
+        overallFilteredProducts = overallFilteredProducts.filter((item) =>
+          sizeArr.includes(item)
         );
       }
-      const overallFilteredProducts = [];
-      if (brandArr.length !== 0 && colourArr.length !== 0) {
-        brandArr.filter((x) => {
-          if (colourArr.includes(x)) {
-            overallFilteredProducts.push(x);
-          }
-        });
-      }
-      if (overallFilteredProducts.length !== 0) {
+      if (overallFilteredProducts.length !== schemaConstants.MIN_LENGTH) {
         state.filteredProductData = overallFilteredProducts;
       } else {
-        if (brandArr.length !== 0 && colourArr.length === 0) {
+        if (
+          brandArr.length !== schemaConstants.MIN_LENGTH &&
+          colourArr.length === schemaConstants.MIN_LENGTH
+        ) {
           state.filteredProductData = brandArr;
-        } else if (brandArr.length === 0 && colourArr.length !== 0) {
+        } else if (
+          brandArr.length === schemaConstants.MIN_LENGTH &&
+          colourArr.length !== 0
+        ) {
           state.filteredProductData = colourArr;
+        } else if (
+          brandArr.length !== schemaConstants.MIN_LENGTH &&
+          colourArr.length !== 0
+        ) {
+          state.filteredProductData = brandArr.filter((x) =>
+            colourArr.includes(x)
+          );
         }
       }
     },

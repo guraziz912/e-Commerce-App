@@ -16,14 +16,18 @@ const Filter = () => {
   const dispatch = useDispatch();
 
   const productCategory = params.productCategory;
-  const [price, setPrice] = useState([0, 2000]);
+
+  const selectedPrice = useSelector(
+    (state) => state.products.masterData.filter.selectedPrice
+  );
+
   const [brandChecked, setBrandChecked] = useState({
     Zara: false,
     Nike: false,
     Adidas: false,
     Logi: false,
     Dell: false,
-    'TP-Link': false,
+    [constants.tpLink]: false,
     IKARUS: false,
   });
   const [colourChecked, setColourChecked] = useState({
@@ -53,7 +57,7 @@ const Filter = () => {
 
   useEffect(() => {
     dispatch(productActions.setDefaultBrandFilter());
-  }, [productCategory]);
+  }, [productCategory, dispatch]);
 
   //setting brand filter
   const brandFilterHandler = (event) => {
@@ -87,17 +91,16 @@ const Filter = () => {
     });
 
     dispatch(
-      productActions.setSizeFilter({
+      productActions.setProductSize({
         name: event.target.name,
         checked: event.target.checked,
       })
     );
   };
 
-  //Setting Prices
+  // Setting Prices
   const handlePriceChange = (event, newValue) => {
-    console.log(event.target);
-    setPrice(newValue);
+    dispatch(productActions.setPriceFilter(newValue));
   };
 
   //mapping sizes
@@ -113,7 +116,7 @@ const Filter = () => {
 
   //mapping brands
   const brands =
-    productCategory !== 'electronics'
+    productCategory !== constants.categoryElectronics
       ? clothingBrandsAvailable.map((item) => {
           return (
             <CheckBox
@@ -133,7 +136,8 @@ const Filter = () => {
           );
         });
 
-  const checkElectronics = productCategory !== 'electronics' && (
+  const checkElectronics = productCategory !==
+    constants.categoryElectronics && (
     <div>
       <div>Sizes:</div>
       <div>{sizes}</div>
@@ -144,24 +148,25 @@ const Filter = () => {
       <CustomCard type={constants.filter} key={productCategory}>
         {checkElectronics}
         <div>
-          <label>Brands :</label>
+          <label>{constants.brandHeader}</label>
         </div>
         <div>{brands}</div>
         <div>
           <CustomRadioComponent
-            name="Colours:"
+            name={constants.colourLabel}
             list={coloursAvailable}
             onChange={colourFilterHandler}
           />
         </div>
-        <div>Price:</div>
+        <div>{constants.priceLabel}</div>
         <div>
           <Slider
-            value={price}
+            value={selectedPrice}
             onChange={handlePriceChange}
-            valueLabelDisplay="auto"
-            aria-labelledby="range-slider"
-            max="2000"
+            valueLabelDisplay={constants.valueLabelDisplay}
+            aria-labelledby={constants.arialabelledby}
+            max={constants.maxPrice}
+            step={constants.stepPriceSlider}
           />
         </div>
       </CustomCard>

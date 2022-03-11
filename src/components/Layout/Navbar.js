@@ -18,23 +18,7 @@ const NavBar = (props) => {
   const totalCartQuantity = useSelector((state) => state.cart.totalQuantity);
 
   // nav bar dropdown data
-  const navItems = [
-    {
-      href: `/products/${'mens'}`,
-      title: constants.menClothing,
-      category: 'mens',
-    },
-    {
-      href: `/products/${'womens'}`,
-      title: constants.womenClothing,
-      category: 'womens',
-    },
-    {
-      href: `/products/${'electronics'}`,
-      title: constants.electronics,
-      category: 'electronics',
-    },
-  ];
+  const navItems = useSelector((state) => state.products.masterData.navItems);
 
   // handler functions
   const navDropDownHandler = (path, category) => {

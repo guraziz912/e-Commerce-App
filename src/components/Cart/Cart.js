@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { Container, Table, Row, Button, Col } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
 
+//custom imports
 import Image from '../../UI/Image';
 import Counter from '../../UI/Counter';
 import { cartActions } from '../../store/cartSlice';
+import constants from '../../utils/constants';
 
 import classes from './Cart.module.css';
+import schemaConstants from '../../utils/schemaConstants';
 
 const Cart = () => {
   const history = useHistory();
@@ -21,7 +23,7 @@ const Cart = () => {
     dispatch(cartActions.removeFromCart(id));
   };
   const homeHandler = () => {
-    history.push('/');
+    history.push(constants.homePath);
   };
 
   const cartPrintHandler = (token, address) => {
@@ -58,7 +60,7 @@ const Cart = () => {
           </td>
           <td>
             <Button onClick={() => removeItemHandler(id)}>
-              <i class="fas fa-times"></i>
+              <i class={constants.removeIconClass}></i>
             </Button>
           </td>
           <td>${totalPrice}</td>
@@ -73,31 +75,39 @@ const Cart = () => {
         <Table bordered>
           <thead>
             <tr className={classes.cartRow}>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Remove</th>
-              <th>Total Price</th>
+              <th>{constants.image}</th>
+              <th>{constants.productName}</th>
+              <th>{constants.productPrice}</th>
+              <th>{constants.productQuantity}</th>
+              <th>{constants.remove}</th>
+              <th>{constants.totalProductPrice}</th>
             </tr>
           </thead>
           <tbody>{cartDetails}</tbody>
-          <tfoot>Total Price :${totalCartPrice}</tfoot>
+          <tfoot>
+            {constants.totalCartPrice}
+            {totalCartPrice}
+          </tfoot>
         </Table>
         <Row>
-          <Col md={4}>
+          <Col md={schemaConstants.COL_MD}>
             <Button
               className={classes.button}
               variant="danger"
               onClick={homeHandler}
             >
-              Continue shopping
+              {constants.continueShopping}
             </Button>
           </Col>
-          <Col md={{ span: 4, offset: 4 }}>
+          <Col
+            md={{
+              span: schemaConstants.COL_SPAN,
+              offset: schemaConstants.COL_OFFSET,
+            }}
+          >
             <StripeCheckout
               className={classes.button}
-              stripeKey="pk_test_51IyhiTSAoPHzmNjVBMWYDdC09jqqR0QKSRQXJTR5XncbGUsHd3EV8OoETxnF5VIDGW92FdIJOI2SneZ4wbQgmHYe00bhLttufU"
+              stripeKey={constants.stripeCheckoutKey}
               token={cartPrintHandler}
             />
           </Col>

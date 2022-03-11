@@ -12,7 +12,9 @@ import Counter from '../../UI/Counter';
 import { findItem } from '../../utils/helperFunctions';
 
 import classes from './ProductDetail.module.css';
+
 import constants from '../../utils/constants';
+import schemaConstants from '../../utils/schemaConstants';
 
 const ProductDetail = (props) => {
   const [checked, setChecked] = useState(false);
@@ -30,9 +32,13 @@ const ProductDetail = (props) => {
     dispatch(
       productActions.setProductCategory(props.match.params.productCategory)
     );
-
-    setTimeout(setShowAlert(false), 5000);
-  }, [props.match.params.productCategory, dispatch]);
+    const alertHandler = () => {
+      if (showAlert) {
+        setShowAlert(false);
+      }
+    };
+    setTimeout(alertHandler, schemaConstants.SET_ALERT_OFF);
+  }, [props.match.params.productCategory, dispatch, showAlert]);
 
   const otherProducts = productData.filter((item) => item.id !== params.itemId);
 
@@ -85,7 +91,8 @@ const ProductDetail = (props) => {
     }
   });
 
-  const buttonDisabled = item.quantity > 0 ? false : true;
+  const buttonDisabled =
+    item.quantity > schemaConstants.MIN_QUANTITY ? false : true;
 
   return (
     <Fragment>
@@ -93,7 +100,7 @@ const ProductDetail = (props) => {
         {constants.addedToCart}
       </Alert>
       <Container>
-        <Row xs={1} md={2}>
+        <Row xs={schemaConstants.ROW_XS} md={schemaConstants.ROW_MD}>
           <Col>
             <Image
               className={classes.productImage}
@@ -125,24 +132,31 @@ const ProductDetail = (props) => {
             <br></br>
             <div>
               <Button
-                variant="danger"
+                variant={constants.varientDanger}
                 onClick={addToCartHandler}
                 disabled={buttonDisabled}
               >
-                <i class="fas fa-shopping-cart"></i>Add to Cart
+                <i class={constants.shoppingCartIcon}></i>
+                {constants.addToCart}
               </Button>
             </div>
           </Col>
           <Col>
             <div>
               <Tabs
-                defaultActiveKey="description"
-                id="uncontrolled-tab-example"
+                defaultActiveKey={constants.description}
+                id={constants.tabId}
               >
-                <Tab eventKey="description" title="Description">
+                <Tab
+                  eventKey={constants.description}
+                  title={constants.description}
+                >
                   {item.description}
                 </Tab>
-                <Tab eventKey="specification" title="Specification">
+                <Tab
+                  eventKey={constants.specification}
+                  title={constants.specification}
+                >
                   {item.description}
                 </Tab>
               </Tabs>
@@ -150,7 +164,7 @@ const ProductDetail = (props) => {
           </Col>
         </Row>
         <Row className={classes.footerRow}>
-          <div>Related Products :</div>
+          <div>{constants.relatedProducts}</div>
           <Col>
             <div className={classes.otherProducts}>{relatedProducts}</div>
           </Col>

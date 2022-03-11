@@ -1,6 +1,7 @@
 import { Carousel } from 'react-bootstrap';
 
 import Image from './Image';
+import constants from '../utils/constants';
 
 import classes from './CustomCarousel.module.css';
 
@@ -14,7 +15,7 @@ const CustomCarousel = ({ data, time }) => {
             <Image
               alt={item.name}
               src={item.source}
-              className="d-block w-100"
+              className={constants.carouselClassname}
             />
 
             <Carousel.Caption>

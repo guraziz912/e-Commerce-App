@@ -1,4 +1,5 @@
 //Inbuilt depenencies imports
+
 import { Fragment } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -11,6 +12,7 @@ import classes from './CustomCard.module.css';
 
 const CustomCard = (props) => {
   const { name, price, itemId, img, category, type, itemBrand } = props;
+  console.log(name);
   let item = 0;
   switch (type) {
     case constants.productListing:
@@ -24,7 +26,10 @@ const CustomCard = (props) => {
                 {constants.price}
                 {price}
               </Card.Text>
-              <Card.Text>Brand:{itemBrand}</Card.Text>
+              <Card.Text>
+                {constants.brandHeader}
+                {itemBrand}
+              </Card.Text>
             </Card.Body>
           </Card>
         </Link>

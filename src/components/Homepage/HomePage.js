@@ -1,27 +1,14 @@
+import { useSelector } from 'react-redux';
+
 import CustomCarousel from '../../UI/CustomCarousel';
 
-import menClothing from '../../assets/menClothing.jpg';
-import electronics from '../../assets/electronics.jpg';
-import womenClothing from '../../assets/womenClothing.jpg';
-
 const HomePage = () => {
-  const bestsellerData = [
-    {
-      name: `Men's Clothing`,
-      source: menClothing,
-    },
-    {
-      name: `Women's Clothing`,
-      source: womenClothing,
-    },
-    {
-      name: `Electronics`,
-      source: electronics,
-    },
-  ];
+  const bestSellerData = useSelector(
+    (state) => state.products.masterData.bestSellerData
+  );
   return (
     <div>
-      <CustomCarousel data={bestsellerData} time={5000} />
+      <CustomCarousel data={bestSellerData} time={5000} />
     </div>
   );
 };

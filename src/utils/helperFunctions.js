@@ -31,3 +31,22 @@ export const checkIfTrue = (data, obj) => {
   }
   return data;
 };
+export const filterBrand = (data, filterList) => {
+  const newData = data.filter(({ brand }) => filterList.includes(brand));
+  return newData;
+};
+export const filterColour = (data, filter) => {
+  const newData = data.filter(({ colour }) => colour === filter);
+  return newData;
+};
+export const filterSize = (data, filterList) => {
+  const newData = [];
+  for (const i in data) {
+    for (const j in filterList) {
+      if (i === j) {
+        newData.push(i);
+      }
+    }
+  }
+  return newData;
+};
