@@ -1,26 +1,14 @@
-import menClothing from '../../assets/menClothing.jpg';
-import electronics from '../../assets/electronics.jpg';
+import { useSelector } from 'react-redux';
+
 import CustomCarousel from '../../UI/CustomCarousel';
 
 const HomePage = () => {
-  const bestsellerData = [
-    {
-      name: `Men's Clothing`,
-      source: menClothing,
-    },
-    {
-      name: `Women's Clothing`,
-      source:
-        'http://themes.pixelstrap.com/multikart/assets/images/home-banner/2.jpg',
-    },
-    {
-      name: `Electronics`,
-      source: electronics,
-    },
-  ];
+  const bestSellerData = useSelector(
+    (state) => state.products.masterData.bestSellerData
+  );
   return (
     <div>
-      <CustomCarousel data={bestsellerData} time={1000} />
+      <CustomCarousel data={bestSellerData} time={5000} />
     </div>
   );
 };

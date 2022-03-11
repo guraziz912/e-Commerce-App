@@ -1,0 +1,80 @@
+.product {
+  display: grid;
+  grid-gap: 10rem;
+  grid-template-columns: repeat(4, 10rem);
+}
+
+@media only screen and (max-width: 600px) {
+  .product {
+    grid-template-columns: repeat(1, 20rem);
+    grid-gap: 5px;
+    margin-right: 5rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .product {
+    grid-template-columns: repeat(1, 20rem);
+    grid-gap: 5px;
+    margin-right: 5rem;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .product {
+    grid-template-columns: repeat(3, 20rem);
+    grid-gap: 5rem;
+    margin-right: 5rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .product {
+    grid-template-columns: repeat(4, 20rem);
+    grid-gap: 5rem;
+    margin-right: 5rem;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .product {
+    grid-template-columns: repeat(3, 20rem);
+    grid-gap: 5rem;
+    margin-right: 5rem;
+  }
+}
+@media (min-width: 1430px) {
+  .productContainer {
+    max-width: 1400px;
+  }
+}
+.productContainer {
+  max-width: 200%;
+}
+.productRow {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) / -2);
+  margin-left: calc(var(--bs-gutter-x) / -2);
+}
+.filter {
+  margin-bottom: 30px;
+  padding: 0 30px;
+  border: 1px solid white;
+  background-color: #f9f9f9;
+}
+@media only screen and (min-width: 100%) {
+  .filter {
+    grid-area: 'header';
+  }
+}

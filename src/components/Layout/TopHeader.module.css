@@ -6,8 +6,9 @@
   background-color: #f8f8f8;
   list-style-type: none;
   text-align: center;
-  font-size: 20px;
+  font-size: xx-large;
   justify-content: space-between;
+  height: 3rem;
 }
 .messageList li {
   display: inline;
