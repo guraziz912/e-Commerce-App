@@ -19,9 +19,9 @@ const schemaConstants = {
   ROW_MD: 2,
   MIN_PRICE: 0,
   MAX_PRICE: 2000,
-  FILTER_COL_XS: 5,
-  FILTER_COL_MD: 5,
+  FILTER_COL_XS: 3,
+  FILTER_COL_MD: 3,
   PRODUCT_COL_XS: 12,
-  PRODUCT_COL_MD: 10,
+  PRODUCT_COL_MD: 7,
 };
 export default schemaConstants;

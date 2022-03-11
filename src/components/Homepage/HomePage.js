@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import CustomCarousel from '../../UI/CustomCarousel';
+import CustomCarousel from '../UI/CustomCarousel';
 
 const HomePage = () => {
   const bestSellerData = useSelector(

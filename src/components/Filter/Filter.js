@@ -5,11 +5,13 @@ import { useParams } from 'react-router';
 import { productActions } from '../../store/productSlice';
 import { Slider } from '@material-ui/core';
 
-import CheckBox from '../../UI/CheckBox';
-import CustomCard from '../../UI/CustomCard';
-import CustomRadioComponent from '../../UI/CustomRadioComponent';
+import CheckBox from '../UI/CheckBox';
+import CustomCard from '../UI/CustomCard';
+import CustomRadioComponent from '../UI/CustomRadioComponent';
 
 import constants from '../../utils/constants';
+
+import classes from './Filter.module.css';
 
 const Filter = () => {
   const params = useParams();
@@ -138,7 +140,7 @@ const Filter = () => {
 
   const checkElectronics = productCategory !==
     constants.categoryElectronics && (
-    <div>
+    <div className={classes.filter}>
       <div>Sizes:</div>
       <div>{sizes}</div>
     </div>
@@ -147,19 +149,19 @@ const Filter = () => {
     <Fragment>
       <CustomCard type={constants.filter} key={productCategory}>
         {checkElectronics}
-        <div>
+        <div className={classes.filter}>
           <label>{constants.brandHeader}</label>
         </div>
-        <div>{brands}</div>
-        <div>
+        <div className={classes.filter}>{brands}</div>
+        <div className={classes.filter}>
           <CustomRadioComponent
             name={constants.colourLabel}
             list={coloursAvailable}
             onChange={colourFilterHandler}
           />
         </div>
-        <div>{constants.priceLabel}</div>
-        <div>
+        <div className={classes.filter}>{constants.priceLabel}</div>
+        <div className={classes.filter}>
           <Slider
             value={selectedPrice}
             onChange={handlePriceChange}

@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { productActions } from '../../store/productSlice';
 
 //custom imports
-import CustomCard from '../../UI/CustomCard';
+import CustomCard from '../UI/CustomCard';
 import Filter from '../Filter/Filter';
 
 //CSS import
@@ -75,13 +75,19 @@ const Products = (props) => {
   return (
     <Container className={classes.productContainer}>
       <Row className={classes.productRow}>
-        <Col xs={3} md={3}>
+        <Col
+          xs={schemaConstants.FILTER_COL_XS}
+          md={schemaConstants.FILTER_COL_MD}
+        >
           <div>
             <Filter className={classes.filter} />
           </div>
         </Col>
 
-        <Col xs={12} md={7}>
+        <Col
+          xs={schemaConstants.PRODUCT_COL_XS}
+          md={schemaConstants.PRODUCT_COL_MD}
+        >
           <div className={classes.product}>{products}</div>
         </Col>
       </Row>
