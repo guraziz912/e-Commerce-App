@@ -5,14 +5,13 @@ import { Container, Row, Col, Button, Tab, Tabs, Alert } from 'react-bootstrap';
 
 import { productActions } from '../../store/productSlice';
 import { cartActions } from '../../store/cartSlice';
-import Image from '../../UI/Image';
-import CustomCard from '../../UI/CustomCard';
-import CustomRadioComponent from '../../UI/CustomRadioComponent';
-import Counter from '../../UI/Counter';
+import Image from '../UI/Image';
+import CustomCard from '../UI/CustomCard';
+import CustomRadioComponent from '../UI/CustomRadioComponent';
+import Counter from '../UI/Counter';
 import { findItem } from '../../utils/helperFunctions';
 
 import classes from './ProductDetail.module.css';
-
 import constants from '../../utils/constants';
 import schemaConstants from '../../utils/schemaConstants';
 

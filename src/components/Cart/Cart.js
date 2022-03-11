@@ -4,8 +4,8 @@ import { Container, Table, Row, Button, Col } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
 
 //custom imports
-import Image from '../../UI/Image';
-import Counter from '../../UI/Counter';
+import Image from '../UI/Image';
+import Counter from '../UI/Counter';
 import { cartActions } from '../../store/cartSlice';
 import constants from '../../utils/constants';
 
